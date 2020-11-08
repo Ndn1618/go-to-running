@@ -23,14 +23,17 @@ elTemperatureForm.addEventListener('change', function (evt) {
       } else {
         elResult.textContent = `YO'Q`;
       }
+      elTemperatureInput.value = temperature;
     } else {
       elResult.textContent = '';
+      elTemperatureInput.value = '';
       alert('Haroratni raqamda kiriting!');
     }
   } else {
+    elTemperatureInput.value = '';
     elResult.textContent = '';
     alert('Haroratni kiriting!');
   }
 
-  elTemperatureInput.value = temperature;
+  elTemperatureInput.focus();
 });
