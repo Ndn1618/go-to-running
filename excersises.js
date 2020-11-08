@@ -8,30 +8,29 @@ var elResult = document.querySelector('.result');
 elTemperatureForm.addEventListener('change', function (evt) {
   evt.preventDefault();
 
-  var temperature = parseFloat(elTemperatureInput.value.trim(), 10);
+  var temperature = elTemperatureInput.value.trim();
   var isRainSwitch = elRainCheckbox.checked;
-  var isHallAviable = elExcersiseHallCheckbox.checked;
+  var isHallOpen = elExcersiseHallCheckbox.checked;
+  var goodTemperature = temperature >= 5 && temperature <= 30;
 
-  if (!isNaN(temperature)) {
-    if (temperature > 30) {
-      elResult.textContent = `YO'Q`;
-    } else if (temperature >= 5 && temperature <= 30) {
-      elResult.textContent = 'HA';
-    } else if (temperature >= 5 && isRainSwitch) {
-      elResult.textContent = 'HA';
-    }
-    else if (temperature >= 5) {
-      elResult.textContent = 'HA';
-    }
-    else if (temperature < 5 && isRainSwitch) {
-      elResult.textContent = `YO'Q`;
-    } else if (temperature < 5) {
-      elResult.textContent = `YO'Q`;
+  if (temperature !== '') {
+    temperature = parseFloat(temperature, 10);
+    if (!isNaN(temperature)) {
+      if (goodTemperature && !isRainSwitch) {
+        elResult.textContent = 'HA';
+      } else if (goodTemperature && isRainSwitch && isHallOpen) {
+        elResult.textContent = 'HA';
+      } else {
+        elResult.textContent = `YO'Q`;
+      }
     } else {
-      elResult.textContent = 'Anglamadim';
+      elResult.textContent = '';
+      alert('Haroratni raqamda kiriting!');
     }
   } else {
     elResult.textContent = '';
-    alert('Haroratni raqamda kiriting!');
+    alert('Haroratni kiriting!');
   }
+
+  elTemperatureInput.value = temperature;
 });
